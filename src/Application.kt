@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.db.DatabaseFactory
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.*
@@ -7,7 +8,10 @@ import io.ktor.gson.gson
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit {
+    DatabaseFactory.init()
+    io.ktor.server.netty.EngineMain.main(args)
+}
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads

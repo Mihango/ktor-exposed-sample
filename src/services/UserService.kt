@@ -4,5 +4,6 @@ import com.example.models.User
 
 interface UserService {
     fun getAllUsers(): List<User>
-    fun addUser(user: User): User
+    fun getUserById(userId: Long): User?
+    fun saveUser(user: User): User
 }

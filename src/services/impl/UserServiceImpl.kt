@@ -6,5 +6,7 @@ import com.example.services.UserService
 
 class UserServiceImpl constructor(private val userRepository: UserRepository) : UserService {
     override fun getAllUsers(): List<User> = userRepository.getAllUsers()
-    override fun addUser(user: User): User = userRepository.addUser(user)
+    override fun getUserById(userId: Long): User? = userRepository.getUserById(userId)
+    override fun saveUser(user: User): User = userRepository.saveUser(user)
+
 }

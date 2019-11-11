@@ -25,7 +25,9 @@ sourceSets {
 repositories {
     mavenLocal()
     jcenter()
+    mavenCentral()
     maven { url 'https://kotlin.bintray.com/ktor' }
+    maven { url = "https://dl.bintray.com/kotlin/exposed" }
 }
 
 dependencies {
@@ -35,5 +37,9 @@ dependencies {
     compile "io.ktor:ktor-server-core:$ktor_version"
     compile "io.ktor:ktor-server-host-common:$ktor_version"
     compile "io.ktor:ktor-gson:$ktor_version"
+
+    implementation("org.jetbrains.exposed:exposed:$exposed_version")
+    implementation("com.h2database:h2:1.4.200")
+    compile("com.zaxxer:HikariCP:2.7.8")
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }

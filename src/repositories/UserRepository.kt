@@ -1,22 +1,36 @@
 package com.example.repositories
 
 import com.example.models.User
-import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
+import com.example.models.UserTable
+import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserRepository {
-    private val count = AtomicInteger()
-    private val users = Collections.synchronizedList(mutableListOf<User>())
 
-    fun getAllUsers(): List<User> = users
-    fun addUser(user: User): User {
-        val c: Int = count.incrementAndGet()
-        user.apply {
-            this.id = c.toLong()
+    fun getAllUsers(): List<User> = transaction {
+        UserTable.selectAll().map { row ->
+            return@map User(row[UserTable.id].value, row[UserTable.fullName], row[UserTable.email])
         }
+    }
 
-        users.add(user)
-        return user
+    fun getUserById(userId: Long): User? = transaction {
+        UserTable.select { UserTable.id eq userId }
+            .map { row -> User(row[UserTable.id].value, row[UserTable.fullName], row[UserTable.email]) }
+            .firstOrNull()
+    }
+
+    fun saveUser(user: User): User {
+        return transaction {
+            val result = UserTable.insertAndGetId {
+                it[fullName] = user.fullName
+                it[email] = user.email
+            }
+
+            user.id = result.value
+            user
+        }
     }
 
 }
