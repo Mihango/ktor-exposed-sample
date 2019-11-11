@@ -1,3 +1,16 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "fullName": "Jimmy Caxton",
+  "email": "jimmy@caxton.com"
+}
+
+###
+GET http://localhost:8080/users
+Accept: application/json
+
+###
 GET http://localhost:8080/
 Accept: application/json
 
